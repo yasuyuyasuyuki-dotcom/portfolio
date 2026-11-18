@@ -334,7 +334,7 @@ if (!DEMO) {
     login: () => au.signInWithPopup(auth, new au.GoogleAuthProvider()),
     logout: () => au.signOut(auth)
   };
-  au.onAuthStateChanged(auth, u => { user = u; if (!u) setEditing(false); });
+  au.onAuthStateChanged(auth, u => { user = u; if (!u && document.body.classList.contains("editing")) setEditing(false); });
   try { const d = await fb.load(); if (d) state = { ...structuredClone(DEFAULT_CONTENT), ...d }; }
   catch (e) { console.warn("load failed", e); }
 } else {
