@@ -18,7 +18,7 @@ index.html 1ファイルで動く静的サイトです。文章などはFirestor
 Firebaseを設定していない状態では「デモモード」になり、ログインなしで編集できますが、
 保存は自分のブラウザ内だけです（訪問者には反映されません）。
 
-## Firebaseの設定（訪問者が編集できないようにする部分）
+## Firebaseの設定（設定済み：プロジェクト portfolio-aa707）
 1. Firebaseコンソールで新しいプロジェクトを作成（例：`miyamoto-portfolio`）
 2. 「Authentication」→ ログイン方法 → **Google** を有効化
    → 設定 → 承認済みドメインに `xxxx.vercel.app`（公開後のドメイン）を追加
@@ -31,7 +31,7 @@ Firebaseを設定していない状態では「デモモード」になり、ロ
        match /site/{doc} {
          allow read: if true;
          allow write: if request.auth != null
-                      && request.auth.token.email == "your.name@gmail.com";
+                      && request.auth.token.email == "yasuyuyasuyuki@gmail.com";
        }
      }
    }
