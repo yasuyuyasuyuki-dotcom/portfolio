@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Yasuyuki Miyamoto — Portfolio</title>
+<meta name="description" content="宮本泰幸 ポートフォリオ / Architecture, Product, Photograph, Drawing, App">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Zen+Old+Mincho:wght@400;600&family=Noto+Sans+JP:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#fbfbf9; --ink:#1c1c1a; --sub:#77756f; --line:#e3e1db; --ph:#ecebe6; --accent:#2f5d8a;
+    --latin:"EB Garamond","Zen Old Mincho",serif;
+    --mincho:"Zen Old Mincho","EB Garamond",serif;
+    --sans:"Noto Sans JP",system-ui,sans-serif;
+    --pad:clamp(20px,5vw,72px);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-weight:300;font-size:14px;line-height:1.9;letter-spacing:.04em;-webkit-font-smoothing:antialiased;min-height:100vh;display:flex;flex-direction:column}
+  a{color:inherit;text-decoration:none}
+  img{display:block;width:100%;height:100%;object-fit:cover}
+  button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+  .pre{white-space:pre-line}
+
+  /* header / tabs */
+  header{position:sticky;top:0;z-index:20;background:var(--bg);display:flex;justify-content:space-between;align-items:baseline;padding:22px var(--pad) 18px;gap:20px;flex-wrap:wrap}
+  .logo{font-family:var(--latin);font-size:17px;letter-spacing:.18em;cursor:pointer}
+  .logo small{font-family:var(--mincho);font-size:11px;letter-spacing:.3em;color:var(--sub);margin-left:12px}
+  nav.tabs{display:flex;gap:28px;font-family:var(--latin);font-size:15px;letter-spacing:.12em}
+  nav.tabs a{color:var(--sub);padding-bottom:3px;border-bottom:1px solid transparent;transition:color .3s,border-color .3s}
+  nav.tabs a:hover{color:var(--ink)}
+  nav.tabs a.on{color:var(--ink);border-color:var(--ink)}
+
+  main{flex:1}
+  .view{display:none;animation:fade .6s ease}
+  .view.on{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+  /* placeholder */
+  .ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:var(--ph);color:#b3b0a7;font-family:var(--latin);font-size:12px;letter-spacing:.2em;text-transform:uppercase}
+  .ph::before{content:"";position:absolute;inset:0;background:
+      linear-gradient(to top right,transparent calc(50% - .5px),#dddbd4 50%,transparent calc(50% + .5px)),
+      linear-gradient(to top left,transparent calc(50% - .5px),#dddbd4 50%,transparent calc(50% + .5px))}
+  .ph span{position:relative;background:var(--ph);padding:4px 10px}
+  .media{position:absolute;inset:0}
+
+  /* HOME */
+  .home{padding:12px var(--pad) 48px}
+  .slides{position:relative;height:calc(100vh - 210px);min-height:380px;overflow:hidden;background:var(--ph);cursor:pointer}
+  .slide{position:absolute;inset:0;opacity:0;transition:opacity 1.4s ease}
+  .slide.on{opacity:1}
+  .slide .media{transition:transform 7s linear}
+  .slide.on .media{transform:scale(1.04)}
+  .slide-cap{display:flex;justify-content:space-between;align-items:end;gap:24px;margin-top:22px;flex-wrap:wrap}
+  .slide-cap h1{font-family:var(--latin);font-weight:400;font-size:clamp(24px,3.4vw,44px);line-height:1.2}
+  .slide-cap h1 span{display:block;font-family:var(--mincho);font-size:13px;letter-spacing:.22em;color:var(--sub);margin-top:10px}
+  .dots{display:flex;gap:10px;align-items:center}
+  .dots button{width:28px;height:1px;background:var(--line);transition:background .4s}
+  .dots button.on{background:var(--ink)}
+  .philo{max-width:820px;margin:0 auto;padding:clamp(60px,14vh,160px) 0 40px;text-align:center}
+  .philo .lbl{font-family:var(--latin);font-size:13px;letter-spacing:.34em;color:var(--sub)}
+  .philo h2{font-family:var(--mincho);font-weight:400;font-size:clamp(24px,3.2vw,40px);letter-spacing:.16em;line-height:1.8;margin:28px 0 36px}
+  .philo p{font-size:14px;line-height:2.5;color:#45443f}
+  .home.mode-both .philo{padding-top:110px}
+
+  /* sections */
+  .page{padding:36px var(--pad) 40px}
+  .sec-head{display:flex;align-items:baseline;gap:20px;border-top:1px solid var(--ink);padding-top:14px;margin-bottom:28px;flex-wrap:wrap}
+  .sec-head h2{font-family:var(--latin);font-weight:400;font-size:15px;letter-spacing:.3em}
+  .sec-head span{font-family:var(--mincho);font-size:11px;letter-spacing:.3em;color:var(--sub)}
+
+  /* works filter + grid */
+  .filters{display:flex;gap:6px 26px;flex-wrap:wrap;font-family:var(--latin);font-size:15px;letter-spacing:.12em;margin-bottom:44px}
+  .filters a{color:var(--sub);transition:color .3s}
+  .filters a sup{font-size:10px;margin-left:3px;letter-spacing:0}
+  .filters a.on{color:var(--ink)}
+  .filters a.on::before{content:"— ";}
+  .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));align-items:start;gap:56px 32px}
+  .card{cursor:pointer;position:relative}
+  .card .thumb{position:relative;aspect-ratio:4/3;overflow:hidden;background:var(--ph)}
+  .card .thumb .media{transition:transform 1.2s cubic-bezier(.2,.7,.2,1)}
+  .card:hover .thumb .media{transform:scale(1.04)}
+  .card .meta{display:grid;grid-template-columns:1fr auto;gap:4px 16px;margin-top:14px}
+  .card h3{font-family:var(--latin);font-weight:400;font-size:18px;line-height:1.35}
+  .card h3 small{display:block;font-family:var(--mincho);font-size:12px;color:var(--sub);letter-spacing:.1em;margin-top:5px}
+  .card .cat{font-family:var(--latin);font-size:12px;color:var(--sub);letter-spacing:.14em;text-transform:uppercase;text-align:right}
+  .empty{color:var(--sub);font-family:var(--mincho);letter-spacing:.2em;padding:60px 0}
+
+  /* work detail */
+  .back{font-family:var(--latin);letter-spacing:.16em;color:var(--sub);margin-bottom:28px;display:inline-block}
+  .back:hover{color:var(--ink)}
+  .d-head{display:grid;grid-template-columns:7fr 5fr;gap:56px;align-items:end;margin-bottom:48px}
+  .d-head .no{font-family:var(--latin);color:var(--sub);font-size:13px;letter-spacing:.2em;text-transform:uppercase}
+  .d-head h2{font-family:var(--latin);font-weight:400;font-size:clamp(30px,4.4vw,58px);line-height:1.12;margin-top:10px}
+  .d-head h2 small{display:block;font-family:var(--mincho);font-size:clamp(13px,1.2vw,16px);letter-spacing:.18em;color:var(--sub);margin-top:16px;line-height:1.7}
+  .d-data{display:grid;grid-template-columns:6em 1fr;border-top:1px solid var(--ink)}
+  .d-data dt,.d-data dd{padding:9px 0;border-bottom:1px solid var(--line);font-size:13px}
+  .d-data dt{font-family:var(--latin);color:var(--sub);letter-spacing:.12em}
+  .d-body{display:grid;gap:48px}
+  .d-fig{position:relative;aspect-ratio:16/9;background:var(--ph);overflow:hidden}
+  .d-pair{display:grid;grid-template-columns:1fr 1fr;gap:32px}
+  .d-pair .d-fig{aspect-ratio:4/3}
+  .d-text{display:grid;grid-template-columns:5fr 7fr;gap:56px}
+  .d-text h3{font-family:var(--mincho);font-weight:400;font-size:20px;letter-spacing:.14em;line-height:1.8}
+  .d-text p{font-size:14px;line-height:2.3;max-width:36em}
+  .visit{font-family:var(--latin);font-size:15px;letter-spacing:.12em;border-bottom:1px solid var(--ink);padding-bottom:2px;display:inline-block;margin-top:20px}
+  .d-nav{display:flex;justify-content:space-between;gap:20px;border-top:1px solid var(--line);padding-top:20px;font-family:var(--latin);letter-spacing:.12em}
+  .d-nav button{color:var(--sub)} .d-nav button:hover{color:var(--ink)}
+
+  /* about */
+  .about{display:grid;grid-template-columns:5fr 7fr;gap:64px}
+  .about .name{font-family:var(--mincho);font-size:clamp(26px,3vw,36px);letter-spacing:.2em;line-height:1.4}
+  .about .name small{display:block;font-family:var(--latin);font-size:15px;letter-spacing:.24em;color:var(--sub);margin-top:6px}
+  .about .intro{margin-top:28px;line-height:2.2;max-width:30em}
+  .cv{display:grid;gap:40px}
+  .cv h4{font-family:var(--latin);font-weight:400;font-size:13px;letter-spacing:.3em;color:var(--sub);margin-bottom:12px}
+  .cv dl{display:grid;grid-template-columns:7em 1fr auto;border-top:1px solid var(--line)}
+  .cv dt,.cv dd{padding:11px 0;border-bottom:1px solid var(--line);font-size:13px}
+  .cv dt{font-family:var(--latin);color:var(--sub);font-size:14px}
+  .cv .x{border-bottom:1px solid var(--line);display:none}
+
+  /* contact */
+  .contact{display:grid;gap:40px;padding-top:30px}
+  .contact .mail{font-family:var(--latin);font-size:clamp(24px,3.6vw,46px);letter-spacing:.04em;width:max-content;max-width:100%;border-bottom:1px solid var(--line)}
+  .contact .links{display:flex;gap:16px 32px;flex-wrap:wrap;font-family:var(--latin);letter-spacing:.14em}
+  .contact .links a{color:var(--sub)} .contact .links a:hover{color:var(--ink)}
+  .contact .note{color:var(--sub);max-width:34em}
+
+  footer{padding:60px var(--pad) 28px;font-family:var(--latin);font-size:12px;color:var(--sub);letter-spacing:.14em;display:flex;justify-content:space-between}
+  footer .edit-entry{color:#c9c6be}
+  footer .edit-entry:hover{color:var(--sub)}
+
+  /* ================= EDITOR ================= */
+  .ed-only{display:none!important}
+  body.editing .ed-only{display:revert!important}
+  body.editing [data-edit]{outline:1px dashed #9fb7cf;outline-offset:3px;border-radius:1px;cursor:text;min-width:2em;display:inline-block}
+  body.editing p[data-edit],body.editing div[data-edit]{display:block}
+  body.editing [data-edit]:focus{outline:1.5px solid var(--accent);background:#f2f6fa}
+  body.editing [data-edit]:empty::before{content:attr(data-ph);color:#b8b5ad}
+  body.editing .cv .x{display:block}
+  .toolbar{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);z-index:60;background:var(--ink);color:#fff;display:none;align-items:center;gap:6px;padding:8px 10px 8px 18px;border-radius:999px;font-size:12px;box-shadow:0 8px 30px rgba(0,0,0,.18);white-space:nowrap}
+  body.editing .toolbar{display:flex}
+  .toolbar .st{margin-right:10px;opacity:.75}
+  .toolbar button{padding:7px 14px;border-radius:999px;letter-spacing:.08em}
+  .toolbar button.primary{background:#fff;color:var(--ink)}
+  .toolbar button:hover{background:rgba(255,255,255,.14)}
+  .toolbar button.primary:hover{background:#e9e9e9}
+  .demo-badge{position:fixed;top:0;left:0;right:0;z-index:70;background:#fff4d6;color:#7a5a00;font-size:11px;text-align:center;padding:3px;display:none}
+  body.editing.demo .demo-badge{display:block}
+  body.editing.demo header{padding-top:34px}
+  .ed-panel{border:1px solid #c9d7e5;background:#f5f8fb;padding:18px 20px;display:grid;gap:12px;font-size:12px}
+  .ed-panel h5{font-size:12px;font-weight:400;letter-spacing:.14em;color:var(--accent)}
+  .ed-panel label{display:grid;gap:4px}
+  .ed-panel input,.ed-panel select,.ed-panel textarea{font:inherit;font-size:12px;padding:7px 9px;border:1px solid #cfd8e2;background:#fff;border-radius:2px;width:100%}
+  .ed-panel textarea{min-height:92px;line-height:1.6}
+  .ed-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+  .ed-btn{border:1px solid var(--accent);color:var(--accent);padding:5px 12px;font-size:12px;border-radius:2px;background:#fff}
+  .ed-btn:hover{background:var(--accent);color:#fff}
+  .ed-btn.danger{border-color:#b33;color:#b33}
+  .ed-btn.danger:hover{background:#b33;color:#fff}
+  .card .order{position:absolute;top:8px;right:8px;z-index:2;display:flex;gap:4px}
+  .card .order button{background:#fff;border:1px solid var(--line);width:28px;height:28px;font-size:12px}
+  .add-card{border:1px dashed #9fb7cf;aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;color:var(--accent);letter-spacing:.14em;cursor:pointer}
+  body.editing .add-card.ed-only{display:flex!important}
+  .hero-switch{margin-bottom:16px}
+
+  /* toast */
+  .toast{position:fixed;left:50%;bottom:80px;transform:translateX(-50%);background:var(--ink);color:#fff;font-size:12px;padding:8px 16px;border-radius:4px;opacity:0;transition:opacity .3s;z-index:80;pointer-events:none}
+  .toast.on{opacity:1}
+
+  @media (max-width:900px){ .grid{grid-template-columns:repeat(2,minmax(0,1fr))} }
+  @media (max-width:640px){
+    nav.tabs{gap:18px;font-size:14px}
+    .logo small{display:none}
+    .slides{height:62vh}
+    .grid{grid-template-columns:1fr;gap:44px}
+    .about,.d-head,.d-text,.d-pair{grid-template-columns:1fr;gap:28px}
+    .toolbar{left:10px;right:10px;transform:none;overflow-x:auto}
+  }
+</style>
+</head>
+<body>
+<div class="demo-badge">デモモード：Firebase未設定のため、保存はこのブラウザ内のみです</div>
+
+<header>
+  <a class="logo" data-go="home">YASUYUKI MIYAMOTO<small>宮本泰幸</small></a>
+  <nav class="tabs">
+    <a data-go="home">Home</a>
+    <a data-go="works">Works</a>
+    <a data-go="about">About</a>
+    <a data-go="contact">Contact</a>
+  </nav>
+</header>
+
+<main>
+  <section class="view" id="v-home"></section>
+  <section class="view" id="v-works"></section>
+  <section class="view" id="v-work"></section>
+  <section class="view" id="v-about"></section>
+  <section class="view" id="v-contact"></section>
+</main>
+
+<footer>
+  <span>© 2026 Yasuyuki Miyamoto</span>
+  <a class="edit-entry" id="editEntry" href="#">Editor</a>
+</footer>
+
+<div class="toolbar">
+  <span class="st" id="saveState">編集モード</span>
+  <button class="primary" id="saveBtn">保存</button>
+  <button id="exitBtn">プレビュー</button>
+  <button id="logoutBtn">ログアウト</button>
+</div>
+<div class="toast" id="toast"></div>
+
+<script type="module">
+/* =========================================================
+   1. Firebase設定（README参照）
+   空のままだと「デモモード」：ログインなしで編集でき、保存はブラウザ内のみ
+   ========================================================= */
+const FIREBASE_CONFIG = {
+  apiKey: "",
+  authDomain: "",
+  projectId: "",
+  storageBucket: "",
+  messagingSenderId: "",
+  appId: ""
+};
+// 編集を許可するGoogleアカウント（Firestoreのルールにも同じものを書く）
+const ADMIN_EMAIL = "your.name@gmail.com";
+
+/* =========================================================
+   2. 初期コンテンツ（Firestoreにデータがないときに使われる）
+   ========================================================= */
+const CATEGORIES = [
+  ["all", "All"], ["architecture", "Architecture"], ["product", "Product"],
+  ["photograph", "Photograph"], ["drawing", "Drawing"], ["app", "App"]
+];
+
+/* 作品詳細の右上に並ぶ項目（カテゴリごと）  [保存キー, 表示ラベル, 入力時のヒント] */
+const FIELDS = {
+  architecture: [["year","Year","年"],["type","Type","種別"],["site","Site","敷地"],["program","Program","用途"],["award","Award","受賞など"]],
+  product:      [["year","Year","制作年"],["type","Type","種類（照明・家具・雑貨など）"],["material","Material","素材"],["size","Size","寸法"],["award","Award","受賞・展示など"]],
+  photograph:   [["year","Year","撮影年"],["location","Location","撮影地"],["camera","Camera","カメラ"],["lens","Lens","レンズ・フィルム"],["series","Series","シリーズ名"]],
+  drawing:      [["year","Year","制作年"],["medium","Medium","画材・技法"],["size","Size","サイズ"],["subject","Subject","題材"],["exhibition","Exhibition","展示など"]],
+  app:          [["year","Year","公開年"],["type","Type","種別（Webアプリなど）"],["stack","Stack","使用技術"],["platform","Platform","対応環境"],["role","Role","担当範囲"]]
+};
+
+const DEFAULT_CONTENT = {
+  heroMode: "slideshow",          // "slideshow" | "philosophy" | "both"
+  philosophy: {
+    title: "水面から、都市を見る。",
+    text: "建築は、人と環境のあいだにある境界をデザインすることだと考えています。\n水辺と都市、内と外、日常と非日常。\nその境界を編み直すことで、まだ見えていない風景を立ち上げたい。\n（※ご自身の言葉に書き換えてください）"
+  },
+  works: [
+    { id: "the-view-from-the-water", category: "architecture", featured: true,
+      title: "2O25: the view from the water", subtitle: "舟を媒介とした都市のあらわれ",
+      year: "20XX", type: "卒業設計", site: "大阪市・安治川", program: "カヌースプリント競技場",
+      award: "GOOD DESIGN NEW HOPE AWARD 入選", lead: "水面から、都市を見る。",
+      text: "大阪・安治川にカヌースプリント競技場を挿入する提案。舟という視点を媒介に、川と都市の関係を編み直す。（※本文は差し替えてください）",
+      images: [], url: "" },
+    { id: "utsuwa-no-minato", category: "architecture", featured: true,
+      title: "Utsuwa no Minato", subtitle: "うつわの湊 ― 潮待ちのアーカイブ ―",
+      year: "2026", type: "コンペティション", site: "香川県丸亀市・笠島地区", program: "マルシェ会場の仮設建築",
+      award: "笠島コンペティション 一次審査通過", lead: "潮を待つ町の記憶を、うつわに。",
+      text: "笠島地区で開かれるマルシェのための仮設建築。潮待ちの港として栄えた町の記憶をアーカイブする「うつわ」として、人と物が集まる場をつくる。（※本文は差し替えてください）",
+      images: [], url: "" },
+    { id: "u30-reconstruction", category: "architecture", featured: false,
+      title: "Reorganizing Boundaries", subtitle: "境界を再編する復興デザイン（作品名を入れてください）",
+      year: "2026", type: "コンペティション", site: "大阪市・安治川", program: "復興デザイン",
+      award: "U30復興デザインコンペ2026 応募", lead: "都市と水辺の境界を描き直す。",
+      text: "卒業設計を出発点に、都市と水辺の境界部分に焦点を当てて再構成した提案。（※本文は差し替えてください）",
+      images: [], url: "" },
+    { id: "hondana", category: "app", featured: false,
+      title: "hondana", subtitle: "読書記録・本棚アプリ",
+      year: "2026", type: "Webアプリ", stack: "HTML / JavaScript / Firebase / Vercel", platform: "Web（PC・スマートフォン）", role: "企画・デザイン・実装",
+      lead: "本を、展示するように並べる。",
+      text: "読んだ本を記録し、美術館に作品を展示するように眺められる本棚アプリ。",
+      images: [], url: "https://hondana3.vercel.app/" },
+    { id: "chiritsumo-buta", category: "app", featured: false,
+      title: "ちりつもぶた", subtitle: "節約記録アプリ",
+      year: "2026", type: "Webアプリ", stack: "HTML / JavaScript / Firebase / Vercel", platform: "Web（ホーム画面に追加可）", role: "企画・デザイン・実装",
+      lead: "浮いたお金で、ぶたが育つ。",
+      text: "得した差額を記録すると、豚の貯金箱のキャラクターが育っていく節約アプリ。月ごとにキャラクターが図鑑に登録される。",
+      images: [], url: "https://chiritsumo-buta.vercel.app/" }
+  ],
+  about: {
+    nameJa: "宮本 泰幸", nameEn: "Yasuyuki Miyamoto",
+    intro: "神戸大学大学院 末包研究室所属。\n建築、プロダクト、写真、ドローイングを行き来しながら、人と環境の境界にあるデザインを考えています。\n（※書き換えてください）",
+    cv: [
+      { h: "EDUCATION", rows: [
+        { k: "20XX —", v: "神戸大学大学院 工学研究科 建築学専攻（末包研究室）" },
+        { k: "20XX", v: "神戸大学 工学部 建築学科 卒業" } ] },
+      { h: "AWARDS", rows: [
+        { k: "20XX", v: "GOOD DESIGN NEW HOPE AWARD 入選 ―「2O25: the view from the water」" },
+        { k: "2026", v: "笠島コンペティション 一次審査通過 ―「うつわの湊」" } ] },
+      { h: "EXPERIENCE", rows: [
+        { k: "20XX", v: "株式会社日建設計 都市デザイン部 インターンシップ" },
+        { k: "20XX", v: "設計事務所インターン ― 集合住宅共用部の内装設計" },
+        { k: "2026", v: "神戸大学 設計基礎A2 ティーチングアシスタント" } ] },
+      { h: "OTHERS", rows: [
+        { k: "Canoe", v: "神戸大学カヌー部 第35代主将" },
+        { k: "Run", v: "100kmウルトラマラソン 完走" } ] }
+    ]
+  },
+  contact: {
+    note: "お仕事のご依頼・ご連絡はこちらからお願いします。",
+    email: "your.name@example.com",
+    links: [ { label: "Instagram", url: "" }, { label: "PDF Portfolio", url: "" } ]
+  }
+};
+
+/* =========================================================
+   3. Firebase / 保存
+   ========================================================= */
+const DEMO = !FIREBASE_CONFIG.apiKey;
+if (DEMO) document.body.classList.add("demo");
+let fb = null, user = null;
+let state = structuredClone(DEFAULT_CONTENT);
+let dirty = false;
+
+if (!DEMO) {
+  const V = "10.12.2";
+  const { initializeApp } = await import(`https://www.gstatic.com/firebasejs/${V}/firebase-app.js`);
+  const fs = await import(`https://www.gstatic.com/firebasejs/${V}/firebase-firestore.js`);
+  const au = await import(`https://www.gstatic.com/firebasejs/${V}/firebase-auth.js`);
+  const app = initializeApp(FIREBASE_CONFIG);
+  const db = fs.getFirestore(app), auth = au.getAuth(app);
+  const ref = fs.doc(db, "site", "content");
+  fb = {
+    load: async () => { const s = await fs.getDoc(ref); return s.exists() ? s.data() : null; },
+    save: data => fs.setDoc(ref, data),
+    login: () => au.signInWithPopup(auth, new au.GoogleAuthProvider()),
+    logout: () => au.signOut(auth)
+  };
+  au.onAuthStateChanged(auth, u => { user = u; if (!u) setEditing(false); });
+  try { const d = await fb.load(); if (d) state = { ...structuredClone(DEFAULT_CONTENT), ...d }; }
+  catch (e) { console.warn("load failed", e); }
+} else {
+  try { const d = localStorage.getItem("portfolio-demo"); if (d) state = JSON.parse(d); } catch (e) {}
+}
+
+async function save() {
+  try {
+    if (DEMO) { try { localStorage.setItem("portfolio-demo", JSON.stringify(state)); } catch (e) {} }
+    else await fb.save(state);
+    dirty = false; updateSaveState(); toast("保存しました");
+  } catch (e) { console.error(e); toast("保存できませんでした（権限を確認してください）"); }
+}
+
+/* =========================================================
+   4. ユーティリティ
+   ========================================================= */
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]));
+const pad = n => String(n).padStart(2, "0");
+const media = (src, label) => src
+  ? `<div class="media"><img src="${esc(src)}" alt="${esc(label)}" loading="lazy"></div>`
+  : `<div class="media ph"><span>${esc(label)}</span></div>`;
+// 編集可能テキスト
+const E = (tag, path, val, ph = "", cls = "") =>
+  `<${tag} class="${cls}" data-edit="${path}" data-ph="${esc(ph)}">${esc(val)}</${tag}>`;
+const getPath = p => p.split(".").reduce((o, k) => o?.[k], state);
+const setPath = (p, v) => { const ks = p.split("."); const last = ks.pop(); ks.reduce((o, k) => o[k], state)[last] = v; };
+const catLabel = c => (CATEGORIES.find(x => x[0] === c) || [, c])[1];
+function toast(msg) { const t = $("#toast"); t.textContent = msg; t.classList.add("on"); clearTimeout(t._t); t._t = setTimeout(() => t.classList.remove("on"), 2200); }
+function markDirty() { dirty = true; updateSaveState(); }
+function updateSaveState() { $("#saveState").textContent = dirty ? "● 未保存の変更あり" : "編集モード"; }
+
+/* =========================================================
+   5. 描画
+   ========================================================= */
+let slideTimer = null;
+
+function renderHome() {
+  const m = state.heroMode;
+  let slides = state.works.filter(w => w.featured && w.images?.[0]);
+  if (!slides.length) slides = state.works.filter(w => w.images?.[0]);
+  if (!slides.length) slides = state.works.filter(w => w.category === "architecture").slice(0, 3);
+  const showSlides = m === "slideshow" || m === "both";
+  const showPhilo = m === "philosophy" || m === "both";
+
+  $("#v-home").innerHTML = `
+    <div class="home mode-${m}">
+      <div class="ed-panel hero-switch ed-only">
+        <h5>トップページの表示</h5>
+        <div class="ed-row">
+          ${[["slideshow","作品スライドショー"],["philosophy","フィロソフィー"],["both","両方（スライド＋下にフィロソフィー）"]]
+            .map(([v,l]) => `<label style="display:flex;gap:6px;align-items:center"><input type="radio" name="hm" value="${v}" ${m===v?"checked":""} style="width:auto">${l}</label>`).join("")}
+        </div>
+        <span style="color:var(--sub)">スライドには作品詳細で「トップのスライドに表示」をオンにした作品の1枚目の画像が使われます。</span>
+      </div>
+      ${showSlides ? `
+        <div class="slides" id="slides">
+          ${slides.map((w, i) => `<div class="slide ${i ? "" : "on"}" data-id="${w.id}">${media(w.images?.[0], w.title)}</div>`).join("")}
+        </div>
+        <div class="slide-cap">
+          <h1 id="slideTitle"></h1>
+          <div class="dots">${slides.map((_, i) => `<button data-i="${i}" class="${i ? "" : "on"}" aria-label="slide ${i + 1}"></button>`).join("")}</div>
+        </div>` : ""}
+      ${showPhilo ? `
+        <div class="philo">
+          <div class="lbl">PHILOSOPHY</div>
+          ${E("h2", "philosophy.title", state.philosophy.title, "タイトル", "pre")}
+          ${E("p", "philosophy.text", state.philosophy.text, "本文", "pre")}
+        </div>` : ""}
+    </div>`;
+
+  document.querySelectorAll('input[name="hm"]').forEach(r => r.onchange = () => { state.heroMode = r.value; markDirty(); renderHome(); });
+
+  clearInterval(slideTimer);
+  if (!showSlides) return;
+  let cur = 0;
+  const els = [...document.querySelectorAll(".slide")], dots = [...document.querySelectorAll(".dots button")];
+  const show = i => {
+    cur = i; els.forEach((e, j) => e.classList.toggle("on", j === i)); dots.forEach((d, j) => d.classList.toggle("on", j === i));
+    const w = slides[i]; $("#slideTitle").innerHTML = `${esc(w.title)}<span>${esc(w.subtitle)}</span>`;
+  };
+  show(0);
+  dots.forEach(d => d.onclick = e => { e.stopPropagation(); show(+d.dataset.i); restart(); });
+  $("#slides").onclick = () => go("work/" + slides[cur].id);
+  const restart = () => { clearInterval(slideTimer); if (els.length > 1) slideTimer = setInterval(() => show((cur + 1) % els.length), 5000); };
+  restart();
+}
+
+function renderWorks(cat = "all") {
+  const list = state.works.map((w, i) => ({ w, i })).filter(({ w }) => cat === "all" || w.category === cat);
+  const count = c => c === "all" ? state.works.length : state.works.filter(w => w.category === c).length;
+  $("#v-works").innerHTML = `
+    <div class="page">
+      <div class="sec-head"><h2>WORKS</h2><span>作品</span></div>
+      <div class="filters">
+        ${CATEGORIES.map(([k, l]) => `<a data-go="works/${k}" class="${k === cat ? "on" : ""}">${l}<sup>${count(k)}</sup></a>`).join("")}
+      </div>
+      <div class="grid">
+        ${list.map(({ w, i }) => `
+          <article class="card" data-go="work/${w.id}">
+            <div class="order ed-only">
+              <button data-move="${i}" data-dir="-1" title="前へ">←</button>
+              <button data-move="${i}" data-dir="1" title="後ろへ">→</button>
+            </div>
+            <div class="thumb">${media(w.images?.[0], catLabel(w.category))}</div>
+            <div class="meta">
+              <h3>${esc(w.title) || "Untitled"}<small>${esc(w.subtitle)}</small></h3>
+              <span class="cat">${esc(catLabel(w.category))}<br>${esc(w.year)}</span>
+            </div>
+          </article>`).join("")}
+        <div class="add-card ed-only" id="addWork">＋ 作品を追加</div>
+      </div>
+      ${list.length ? "" : `<p class="empty">まだ作品がありません</p>`}
+    </div>`;
+  document.querySelectorAll("[data-move]").forEach(b => b.onclick = e => {
+    e.stopPropagation();
+    const i = +b.dataset.move, j = i + +b.dataset.dir;
+    if (j < 0 || j >= state.works.length) return;
+    [state.works[i], state.works[j]] = [state.works[j], state.works[i]];
+    markDirty(); renderWorks(cat);
+  });
+  const add = $("#addWork");
+  if (add) add.onclick = () => {
+    const id = "work-" + Date.now().toString(36);
+    state.works.push({ id, category: cat === "all" ? "architecture" : cat, featured: false, title: "", subtitle: "",
+      year: "", lead: "", text: "", images: [], url: "" });
+    markDirty(); go("work/" + id);
+  };
+}
+
+function renderWork(id) {
+  const i = state.works.findIndex(w => w.id === id);
+  if (i < 0) return go("works");
+  const w = state.works[i], P = `works.${i}`, img = w.images || [];
+  const prev = state.works[(i - 1 + state.works.length) % state.works.length];
+  const next = state.works[(i + 1) % state.works.length];
+  const row = (label, key, ph) => (w[key] || document.body.classList.contains("editing"))
+    ? `<dt>${label}</dt><dd>${E("span", `${P}.${key}`, w[key], ph)}</dd>` : "";
+  const extra = img.slice(4);
+
+  $("#v-work").innerHTML = `
+    <div class="page">
+      <a class="back" data-go="works/${w.category}">← ${esc(catLabel(w.category))}</a>
+
+      <div class="ed-panel ed-only" style="margin-bottom:40px">
+        <h5>作品の設定</h5>
+        <div class="ed-row">
+          <label style="flex:1;min-width:160px">カテゴリ
+            <select id="edCat">${CATEGORIES.slice(1).map(([k, l]) => `<option value="${k}" ${w.category === k ? "selected" : ""}>${l}</option>`).join("")}</select>
+          </label>
+          <label style="flex:1;min-width:160px">URL用ID（英数字とハイフン）
+            <input id="edId" value="${esc(w.id)}">
+          </label>
+          <label style="flex:2;min-width:220px">外部リンク（アプリ等）
+            <input id="edUrl" value="${esc(w.url)}" placeholder="https://">
+          </label>
+        </div>
+        <label style="display:flex;gap:8px;align-items:center"><input type="checkbox" id="edFeat" ${w.featured ? "checked" : ""} style="width:auto">トップのスライドに表示</label>
+        <label>画像（1行に1つ。images/フォルダのパス、または画像URL）
+          <textarea id="edImgs" placeholder="images/the-view-from-the-water/01.jpg">${esc(img.join("\n"))}</textarea>
+        </label>
+        <span style="color:var(--sub)">1枚目：メイン（一覧・スライド）／2・3枚目：横並び／4枚目：横長／5枚目以降：下に続けて表示</span>
+        <div class="ed-row"><button class="ed-btn danger" id="edDel">この作品を削除</button></div>
+      </div>
+
+      <div class="d-head">
+        <div>
+          <div class="no">${pad(i + 1)} — ${esc(catLabel(w.category))}</div>
+          <h2>${E("span", `${P}.title`, w.title, "作品タイトル")}<small>${E("span", `${P}.subtitle`, w.subtitle, "サブタイトル")}</small></h2>
+        </div>
+        <dl class="d-data">
+          ${(FIELDS[w.category] || FIELDS.architecture).map(([k, l, ph]) => row(l, k, ph)).join("")}
+        </dl>
+      </div>
+      <div class="d-body">
+        <div class="d-fig">${media(img[0], "Main Image")}</div>
+        <div class="d-text">
+          ${E("h3", `${P}.lead`, w.lead, "リード文", "pre")}
+          <div>
+            ${E("p", `${P}.text`, w.text, "本文", "pre")}
+            ${w.url ? `<a class="visit" href="${esc(w.url)}" target="_blank" rel="noopener">Visit →</a>` : ""}
+          </div>
+        </div>
+        <div class="d-pair">
+          <div class="d-fig">${media(img[1], "Image 2")}</div>
+          <div class="d-fig">${media(img[2], "Image 3")}</div>
+        </div>
+        <div class="d-fig">${media(img[3], "Image 4")}</div>
+        ${extra.map(s => `<div class="d-fig">${media(s, "Image")}</div>`).join("")}
+        <div class="d-nav">
+          <button data-go="work/${prev.id}">← ${esc(prev.title)}</button>
+          <button data-go="work/${next.id}">${esc(next.title)} →</button>
+        </div>
+      </div>
+    </div>`;
+
+  const rerender = () => { markDirty(); renderWork(w.id); };
+  $("#edCat").onchange = e => { w.category = e.target.value; rerender(); };
+  $("#edFeat").onchange = e => { w.featured = e.target.checked; markDirty(); };
+  $("#edUrl").onchange = e => { w.url = e.target.value.trim(); rerender(); };
+  $("#edImgs").onchange = e => { w.images = e.target.value.split("\n").map(s => s.trim()).filter(Boolean); rerender(); };
+  $("#edId").onchange = e => {
+    const v = e.target.value.trim().toLowerCase().replace(/[^a-z0-9-]/g, "-");
+    if (!v || state.works.some(x => x.id === v && x !== w)) { toast("そのIDは使えません"); e.target.value = w.id; return; }
+    w.id = v; markDirty(); history.replaceState(null, "", "#work/" + v);
+  };
+  $("#edDel").onclick = () => {
+    if (!confirm(`「${w.title || "無題"}」を削除しますか？`)) return;
+    state.works.splice(i, 1); markDirty(); go("works");
+  };
+}
+
+function renderAbout() {
+  const a = state.about;
+  $("#v-about").innerHTML = `
+    <div class="page">
+      <div class="sec-head"><h2>ABOUT</h2><span>プロフィール</span></div>
+      <div class="about">
+        <div>
+          <div class="name">${E("span", "about.nameJa", a.nameJa, "名前")}<small>${E("span", "about.nameEn", a.nameEn, "Name")}</small></div>
+          ${E("p", "about.intro", a.intro, "自己紹介", "intro pre")}
+        </div>
+        <div class="cv">
+          ${a.cv.map((s, si) => `
+            <div>
+              <h4>${E("span", `about.cv.${si}.h`, s.h, "見出し")}</h4>
+              <dl>
+                ${s.rows.map((r, ri) => `
+                  <dt>${E("span", `about.cv.${si}.rows.${ri}.k`, r.k, "年")}</dt>
+                  <dd>${E("span", `about.cv.${si}.rows.${ri}.v`, r.v, "内容")}</dd>
+                  <button class="x" data-delrow="${si}.${ri}" title="行を削除">×</button>`).join("")}
+              </dl>
+              <div class="ed-row ed-only" style="margin-top:8px">
+                <button class="ed-btn" data-addrow="${si}">＋ 行を追加</button>
+                <button class="ed-btn danger" data-delsec="${si}">この項目を削除</button>
+              </div>
+            </div>`).join("")}
+          <div class="ed-only"><button class="ed-btn" id="addSec">＋ 項目を追加</button></div>
+        </div>
+      </div>
+    </div>`;
+  document.querySelectorAll("[data-addrow]").forEach(b => b.onclick = () => { a.cv[+b.dataset.addrow].rows.push({ k: "", v: "" }); markDirty(); renderAbout(); });
+  document.querySelectorAll("[data-delrow]").forEach(b => b.onclick = () => { const [s, r] = b.dataset.delrow.split(".").map(Number); a.cv[s].rows.splice(r, 1); markDirty(); renderAbout(); });
+  document.querySelectorAll("[data-delsec]").forEach(b => b.onclick = () => { if (confirm("この項目を削除しますか？")) { a.cv.splice(+b.dataset.delsec, 1); markDirty(); renderAbout(); } });
+  const as = $("#addSec"); if (as) as.onclick = () => { a.cv.push({ h: "NEW", rows: [{ k: "", v: "" }] }); markDirty(); renderAbout(); };
+}
+
+function renderContact() {
+  const c = state.contact;
+  $("#v-contact").innerHTML = `
+    <div class="page">
+      <div class="sec-head"><h2>CONTACT</h2><span>お問い合わせ</span></div>
+      <div class="contact">
+        ${E("p", "contact.note", c.note, "メッセージ", "note pre")}
+        <a class="mail" href="mailto:${esc(c.email)}">${E("span", "contact.email", c.email, "メールアドレス")}</a>
+        <div class="links">
+          ${c.links.map((l, i) => `
+            <span>
+              <a href="${esc(l.url) || "#"}" target="_blank" rel="noopener">${E("span", `contact.links.${i}.label`, l.label, "リンク名")}</a>
+              <span class="ed-only" style="display:block;font-size:11px;color:var(--sub)">URL: ${E("span", `contact.links.${i}.url`, l.url, "https://")}
+                <button class="ed-btn danger" data-dellink="${i}" style="padding:1px 6px;margin-left:6px">×</button></span>
+            </span>`).join("")}
+          <button class="ed-btn ed-only" id="addLink">＋ リンクを追加</button>
+        </div>
+      </div>
+    </div>`;
+  document.querySelectorAll("[data-dellink]").forEach(b => b.onclick = () => { c.links.splice(+b.dataset.dellink, 1); markDirty(); renderContact(); });
+  const al = $("#addLink"); if (al) al.onclick = () => { c.links.push({ label: "", url: "" }); markDirty(); renderContact(); };
+}
+
+/* =========================================================
+   6. タブ切り替え（URLの # で管理）
+   ========================================================= */
+function go(h) { location.hash = h; }
+function route() {
+  const [view, arg] = (location.hash.slice(1) || "home").split("/");
+  const v = ["home", "works", "work", "about", "contact"].includes(view) ? view : "home";
+  document.querySelectorAll(".view").forEach(s => s.classList.toggle("on", s.id === "v-" + v));
+  document.querySelectorAll("nav.tabs a").forEach(a => a.classList.toggle("on", a.dataset.go === (v === "work" ? "works" : v)));
+  if (v !== "home") clearInterval(slideTimer);
+  ({ home: renderHome, works: () => renderWorks(arg || "all"), work: () => renderWork(arg),
+     about: renderAbout, contact: renderContact })[v]();
+  applyEditable();
+  window.scrollTo(0, 0);
+}
+window.addEventListener("hashchange", route);
+document.addEventListener("click", e => {
+  if (document.body.classList.contains("editing") && e.target.closest("[data-edit]")) { e.preventDefault(); return; }
+  const g = e.target.closest("[data-go]");
+  if (g) { e.preventDefault(); go(g.dataset.go); }
+});
+
+/* =========================================================
+   7. 編集モード
+   ========================================================= */
+function applyEditable() {
+  const on = document.body.classList.contains("editing");
+  document.querySelectorAll("[data-edit]").forEach(el => el.contentEditable = on ? "plaintext-only" : "false");
+}
+document.addEventListener("input", e => {
+  const el = e.target.closest?.("[data-edit]");
+  if (!el) return;
+  setPath(el.dataset.edit, el.innerText.replace(/\n$/, ""));
+  markDirty();
+});
+document.addEventListener("keydown", e => {
+  if ((e.metaKey || e.ctrlKey) && e.key === "s" && document.body.classList.contains("editing")) { e.preventDefault(); save(); }
+});
+
+function setEditing(on) {
+  document.body.classList.toggle("editing", on);
+  updateSaveState(); route();
+}
+
+$("#editEntry").onclick = async e => {
+  e.preventDefault();
+  if (DEMO) return setEditing(true);
+  try {
+    if (!user) await fb.login();
+    if (user?.email !== ADMIN_EMAIL) { toast("このアカウントには編集権限がありません"); return; }
+    setEditing(true);
+  } catch (err) { console.error(err); toast("ログインできませんでした"); }
+};
+$("#saveBtn").onclick = save;
+$("#exitBtn").onclick = () => {
+  if (dirty && !confirm("未保存の変更があります。保存せずにプレビューに戻りますか？")) return;
+  setEditing(false);
+};
+$("#logoutBtn").onclick = async () => {
+  if (dirty && !confirm("未保存の変更があります。ログアウトしますか？")) return;
+  if (fb) await fb.logout();
+  setEditing(false);
+};
+window.addEventListener("beforeunload", e => { if (dirty) { e.preventDefault(); e.returnValue = ""; } });
+
+route();
+</script>
+</body>
+</html>
